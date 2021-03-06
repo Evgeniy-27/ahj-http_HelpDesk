@@ -36,6 +36,9 @@ app.use(
   );
   
 app.use(async ctx => {
+    ctx.response.set({
+        'Access-Control-Allow-Origin': '*',
+        });
     const { method } = ctx.request.query;
     switch (method) {
         case 'allTickets':
