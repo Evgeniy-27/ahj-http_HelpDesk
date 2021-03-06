@@ -1,29 +1,27 @@
+const http = require("http");
+const path = require("path");
 const Koa = require('koa');
 const app = new Koa();
 const koaBody = require('koa-body');
 const cors = require('koa-cors');
-const port = process.env.PORT || 7070;
-// const server = http.createServer(app.callback()).listen(port)
 
-const tickets = [
-    {
-        id: 1,
-        name: 'Поменять краску в принтере',
-        description: 'Нужно поменять краску в принтере в бухгалтерии. Принтер HP 124J823',
-        status: false,
-        created: new Date(),
-    },
-    {
-        id: 2,
-        name: 'Переустановить Windows',
-        description: 'Переустановить ОС на ноутбуке офис менеджера',
-        status: true,
-        created: new Date(2021, 3, 3, 3, 3, 3),
-    }
-];
+const ticket = require("./Ticket");
+
+const public = path.join(__dirname, "/public");
+
+
 
 app.use(cors({origin: 'Allow-all'}));
-app.use(koaBody());
+
+app.use(
+    koaBody({
+      text: true,
+      urlencoded: true,
+      multipart: true,
+      json: true,
+    })
+  );
+
 app.use(async ctx => {
     const { method } = ctx.request.query;
     switch (method) {
@@ -76,4 +74,7 @@ app.use(async ctx => {
     }
 });
 
-app.listen(port);
+const port = process.env.PORT || 7070;
+const server = http.createServer(app.callback()).listen(port)
+
+// app.listen(port);
