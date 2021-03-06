@@ -5,11 +5,24 @@ const app = new Koa();
 const koaBody = require('koa-body');
 const cors = require('koa-cors');
 
-const ticket = require("./Ticket");
-
 const public = path.join(__dirname, "/public");
 
-
+const tickets = [
+    {
+        id: 1,
+        name: 'Поменять краску в принтере',
+        description: 'Нужно поменять краску в принтере в бухгалтерии. Принтер HP 124J823',
+        status: false,
+        created: new Date(),
+    },
+    {
+        id: 2,
+        name: 'Переустановить Windows',
+        description: 'Переустановить ОС на ноутбуке офис менеджера',
+        status: true,
+        created: new Date(2021, 3, 3, 3, 3, 3),
+    }
+];
 
 app.use(cors({origin: 'Allow-all'}));
 
@@ -21,7 +34,7 @@ app.use(
       json: true,
     })
   );
-
+  
 app.use(async ctx => {
     const { method } = ctx.request.query;
     switch (method) {
