@@ -102,7 +102,7 @@ app.use(async ctx => {
             ctx.response.body = ticket;
             return;
         case 'deleteTicket':
-            if (ctx.request.method !== 'DELETE') {
+            if (ctx.request.method !== 'POST') {
                 ctx.response.status = 404;
                 return;
             }
