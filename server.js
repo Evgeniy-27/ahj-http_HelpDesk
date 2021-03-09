@@ -68,7 +68,7 @@ app.use(async ctx => {
             };
             tickets.push(ticket);
             ctx.response.status = 201;
-            ctx.response.body = ticket;
+            ctx.response.body = tickets;
             return;
         case 'deleteTicket':
             if (ctx.request.method !== 'POST') {
