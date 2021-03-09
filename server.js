@@ -82,7 +82,7 @@ app.use(async ctx => {
                 return;
             }
             tickets.splice(index, 1);
-            ctx.response.status = 410;
+            ctx.response.body = tickets;
             return;
             default:server.js
             ctx.response.status = 404;
