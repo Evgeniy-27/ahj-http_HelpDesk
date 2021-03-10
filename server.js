@@ -63,7 +63,7 @@ app.use(async ctx => {
                 id: tickets.length + 1,
                 name: data.name,
                 description: data.description,
-                status: false,
+                status,
                 created: new Date(),
             };
             tickets.push(ticket);
