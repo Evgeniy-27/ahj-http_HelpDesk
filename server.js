@@ -48,7 +48,7 @@ app.use(async ctx => {
             const {id: ticketId} = ctx.request.query;
             const ticketToShow = tickets.find(ticket => ticket.id === parseInt(ticketId));
             if (ticketToShow) {
-                ctx.response.body = ticketToShow;
+                ctx.response.body = ticketToShow.description;
             } else {
                 ctx.response.status = 404;
             }
