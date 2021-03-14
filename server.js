@@ -12,19 +12,26 @@ const tickets = [
         id: 1,
         name: 'Поменять краску в принтере',
         description: 'Нужно поменять краску в принтере в бухгалтерии. Принтер HP 124J823',
-        status: false,
+        status: 'false',
         created: new Date(),
     },
     {
         id: 2,
         name: 'Переустановить Windows',
         description: 'Переустановить ОС на ноутбуке офис менеджера',
-        status: true,
+        status: 'true',
         created: new Date(2021, 3, 3, 3, 3, 3),
     }
 ];
 
-app.use(cors({origin: 'Allow-all'}));
+app.use(
+    cors({
+        origin: '*',
+        credentials: true,
+        'Access-Control-Allow-Origin': true,
+        allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+      })
+    );
 
 app.use(
     koaBody({
@@ -59,14 +66,21 @@ app.use(async ctx => {
                 return;
             }
             const data = ctx.request.body;
+                                  
             const ticket = {
-                id: tickets.length + 1,
+                id: (data.id) ? parseInt(data.id) : (tickets[tickets.length - 1]).id + 1,
                 name: data.name,
                 description: data.description,
-                status: data.status,
+                status: (data.status) ? data.status : 'false',
                 created: new Date(),
             };
+
+            if (data.id) {
+                let indexTicket = tickets.findIndex(ticket => ticket.id === parseInt(data.id));
+                tickets.splice(indexTicket, 1, ticket);
+             } else {
             tickets.push(ticket);
+            };
             ctx.response.status = 201;
             ctx.response.body = tickets;
             return;
